@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine aux cristaux</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=DM+Serif+Text:ital@0;1&family=Delius&family=Delius+Swash+Caps&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&family=Playwrite+HU:wght@100..400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Savate:ital,wght@0,200..900;1,200..900&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script type="module" src="./js/main.js"></script>
+    
+</head>
+<body>
+    <header>
+        <p class="titre">Mine aux cristaux</p>
+    </header>
+    <main>
+        <div class="cadreJeu">
+            <div class="enteteMine">
+                <div>
+                    <img src="./img/pioche.png" class="pioche"></img>
+                </div>
+                <div id="progressBar" class="progressBar">
+                    <div class="progressBarGreen" id = 'progressBarGreen'>
+                    </div>
+                    <div class="progressBarGray" id = 'progressBarGray'>
+                    </div>
+                    <div class="energie" id='energie' > 40/40 </div>
+                </div>
+                <div>
+                    <input type="button" value="Quitter" id='quitter' class="quitter">
+                </div>
+                <div class="cristal">
+                    <div class="nombreCristaux" id='nombreCristaux'>0</div>
+                    <div>
+                        <img src="./img/cristaux.png" alt="cristal" class="imageCristal"></img>
+                    </div>
+                </div>    
+            </div>
+            <div class="grille" id="grille">
+            </div>
+            <div class="resultat" id = 'resultat'>
+                <span class="ganeOver"> Game Over</span>
+                <span class="cristaux" id = 'cristalResultat'> Cristaux : 0</span>
+                <input type="button" value="Nouvelle Partie" id='rejouer' class="rejouer">
+            </div>
+            <div>
+                <input class = "haut" type="button" value="Haut" id="haut">
+            </div>
+            <div>
+                    <input type="button" value="Gauche" id="gauche" class = "gauche">
+                    <input type="button" value="Droite" id="droite" class = "droite">
+            </div>
+            <div><input type="button" value="Bas" id="bas"  class = "bas"></div>
+        </div>
+    </main>
+    <footer>
+        <p class = "Copy">Mine aux cristaux | &copy; Collège La Cité - Ottawa | Hiver 2025</p>
+        <p class = "name">Développé par Kevin Rostand Tiam </p>
+    </footer>
+</body>
+</html>
