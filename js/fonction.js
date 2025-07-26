@@ -1,8 +1,8 @@
 // Configuration des images
 const images = [
-  "/img/mineur.png",
-  "/img/pierres.png",
-  "/img/cristaux_creuser.png",
+  "./img/mineur.png",
+  "./img/pierres.png",
+  "./img/cristaux_creuser.png",
 ];
 
 // Variables globales
