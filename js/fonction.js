@@ -1,8 +1,9 @@
 // Configuration des images
 const images = [
-  "/img/mineur.png",
-  "/img/pierres.png",
-  "/img/cristaux_creuser.png",
+  "./img/hero.png",
+  "./img/tile_roche.png",
+  "./img/tile_cristal.png",
+  "./img/tile_vide.png",
 ];
 
 // Variables globales
@@ -11,7 +12,7 @@ let energie = 40;
 
 // Fonction pour positionner les cristaux
 const positionnerCristaux = (grille, largeur, hauteur) => {
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 38; i++) {
     let x, y;
     const mineurX = Math.floor(largeur / 2);
     const mineurY = Math.floor(hauteur / 2);
@@ -39,22 +40,29 @@ const creerGrilleJeu = () => {
   const hauteur = 15;
   const largeur = 20;
   const grilleRocher = document.getElementById("grille");
-  
+
   // Nettoyage complet
   grilleRocher.innerHTML = "";
   grilleRocher.style.gridTemplateColumns = `repeat(${largeur}, 1fr)`;
   grilleRocher.style.gridTemplateRows = `repeat(${hauteur}, 1fr)`;
 
-  // Création d'une NOUVELLE grille vierge
-  const grille = Array(hauteur).fill().map(() => Array(largeur).fill(null));
+  // Création d'une grille contenant des pierres (tableau a deux dimensions)
+const grille = Array(hauteur)
+  .fill()
+  .map(() =>
+    Array(largeur).fill({
+      type: "pierre",
+      image: images[1],
+    })
+  );
 
   // Positionnement des cristaux
   positionnerCristaux(grille, largeur, hauteur);
 
-  // Positionnement UNIQUE du mineur
+  // Positionnement  du mineur
   const centreY = Math.floor(hauteur / 2);
   const centreX = Math.floor(largeur / 2);
-  
+
   // Vérification qu'aucun mineur n'existe déjà
   for (let y = 0; y < hauteur; y++) {
     for (let x = 0; x < largeur; x++) {
@@ -69,7 +77,7 @@ const creerGrilleJeu = () => {
     x: centreX,
     y: centreY,
     type: "mineur",
-    image: images[0]
+    image: images[0],
   };
 
   grille.mineur = grille[centreY][centreX];
@@ -83,8 +91,8 @@ const creerGrilleJeu = () => {
       caseElement.dataset.y = y;
 
       const cell = grille[y][x];
-      let imgSrc = images[1]; // Pierre par défaut
-      let altText = "pierre";
+      let imgSrc = "";
+      let altText = "";
 
       if (cell?.type === "cristal") {
         imgSrc = images[2];
@@ -92,24 +100,29 @@ const creerGrilleJeu = () => {
       } else if (cell?.type === "mineur") {
         imgSrc = images[0];
         altText = "mineur";
+      } else {
+        cell?.type === "pierre";
+        imgSrc = images[1];
+        altText = "pierre";
       }
 
       caseElement.innerHTML = `<img src="${imgSrc}" class="img" alt="${altText}">`;
       grilleRocher.appendChild(caseElement);
     }
   }
-  
+
   return grille;
 };
 
 // Déplacement du mineur
 const deplacerMineur = (direction, grille) => {
-    const endGameElem = document.getElementById("resultat");
-    const estVisible = endGameElem.style.display === "flex";
+  const endGameElem = document.getElementById("resultat");
+  const estVisible = endGameElem.style.display === "flex";
 
+  // Si l'énergie est épuisée ou que l'écran de fin est visible, on arrête
   if (energie <= 0 || estVisible) return;
 
-  // Trouver le mineur
+  // Trouver le mineur dans la grille
   const mineur = grille.flat().find((caseObj) => caseObj?.type === "mineur");
   if (!mineur) return;
 
@@ -118,6 +131,8 @@ const deplacerMineur = (direction, grille) => {
 
   let newX = mineur.x;
   let newY = mineur.y;
+
+  // Calcul des nouvelles coordonnées en fonction de la direction
   switch (direction) {
     case "haut":
       newY--;
@@ -133,19 +148,22 @@ const deplacerMineur = (direction, grille) => {
       break;
   }
 
-  // Vérification des limites
+  // Vérification des limites de la grille
   if (newX >= 0 && newX < largeur && newY >= 0 && newY < hauteur) {
-    // Mise à jour de l'énergie
-    updateEnergie();
-
-    // Vérification de la présence d'un cristal
+    // Récupérer la position du mineur dans la grille
     const positionMineur = grille[newY][newX];
+
+    // Vérifier si la position du mineur contient un cristal
     const contientCristal = positionMineur?.type === "cristal";
 
-    // Placer le mineur à la nouvelle position
-    grille[newY][newX] = mineur;
+    // Déterminer si la case cible est une pierre ou un cristal
+    const estPierreOuCristal = positionMineur?.type === "pierre" || positionMineur?.type === "cristal";
 
-    // Mise à jour des coordonnées
+    // Mise à jour de la grille : déplacer le mineur
+    grille[newY][newX] = mineur;
+    grille[mineur.y][mineur.x] = null; // Effacer l'ancienne position du mineur
+
+    // Mise à jour des coordonnées du mineur
     const ancienneX = mineur.x;
     const ancienneY = mineur.y;
     mineur.x = newX;
@@ -160,12 +178,22 @@ const deplacerMineur = (direction, grille) => {
     );
 
     if (nouvellePosition && anciennePosition) {
-      anciennePosition.innerHTML = " "; // Remplacer par une pierre
+      anciennePosition.innerHTML = `<img src="${images[3]}" class="img" alt="mineur">`;
       nouvellePosition.innerHTML = `<img src="${images[0]}" class="img" alt="mineur">`;
     }
 
-    // Mise à jour du score
+    // Décrémenter l'énergie uniquement si la case cible est une pierre ou un cristal
+    if (estPierreOuCristal) {
+      updateEnergie();
+    }
+
+    // Mise à jour du score si un cristal est collecté
     updateScore(contientCristal);
+
+    // Vérifier si la partie est terminée
+    if (energie === 0 || tousCristauxCollectes(grille)) {
+      endGame();
+    }
   }
 };
 
@@ -174,7 +202,9 @@ const updateScore = (contientCristal) => {
   if (contientCristal) {
     score++;
     document.getElementById("nombreCristaux").textContent = score;
-    document.getElementById("cristalResultat").textContent = `Cristaux : ${score}`;
+    document.getElementById(
+      "cristalResultat"
+    ).textContent = `Cristaux : ${score}`;
   }
 };
 
@@ -207,7 +237,9 @@ const endGame = () => {
 
 export const mettreAJourAffichageMineur = (grille) => {
   // Par exemple :
-  const cellule = document.querySelector(`[data-x='${grille.mineur.x}'][data-y='${grille.mineur.y}']`);
+  const cellule = document.querySelector(
+    `[data-x='${grille.mineur.x}'][data-y='${grille.mineur.y}']`
+  );
   if (cellule) {
     cellule.classList.add("mineur");
   }
@@ -236,4 +268,4 @@ const rejouerPartie = () => {
   return nouvelleGrille;
 };
 
-export { creerGrilleJeu, deplacerMineur, updateScore,rejouerPartie };
+export { creerGrilleJeu, deplacerMineur, updateScore, rejouerPartie };
