@@ -1,8 +1,10 @@
 // Configuration des images
 const images = [
-  "/img/mineur.png",
-  "/img/pierres.png",
-  "/img/cristaux_creuser.png",
+  "./img/hero.png",
+  "./img/tile_roche.png",
+  "./img/tile_cristal.png",
+  "./img/tile_vide.png",
+
 ];
 
 // Variables globales
