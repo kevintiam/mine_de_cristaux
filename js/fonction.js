@@ -1,9 +1,8 @@
 // Configuration des images
 const images = [
-  "./img/hero.png",
-  "./img/tile_roche.png",
-  "./img/tile_cristal.png",
-  "./img/tile_vide.png",
+  "/img/mineur.png",
+  "/img/pierres.png",
+  "/img/cristaux_creuser.png",
 ];
 
 // Variables globales
@@ -268,4 +267,4 @@ const rejouerPartie = () => {
   return nouvelleGrille;
 };
 
-export { creerGrilleJeu, deplacerMineur, updateScore, rejouerPartie };
+export { creerGrilleJeu, deplacerMineur, updateScore,rejouerPartie };
