@@ -7,42 +7,22 @@ const images = [
 
 ];
 
-// Variables globales
+// initialisation du score et de l'energie
 let score = 0;
 let energie = 40;
 
-// Fonction pour positionner les cristaux
-const positionnerCristaux = (grille, largeur, hauteur) => {
-  for (let i = 0; i < 38; i++) {
-    let x, y;
-    const mineurX = Math.floor(largeur / 2);
-    const mineurY = Math.floor(hauteur / 2);
 
-    do {
-      x = Math.floor(Math.random() * largeur);
-      y = Math.floor(Math.random() * hauteur);
-    } while (
-      (Math.abs(x - mineurX) <= 1 && Math.abs(y - mineurY) <= 1) ||
-      grille[y][x]?.type === "cristal"
-    );
-
-    grille[y][x] = {
-      x: x,
-      y: y,
-      type: "cristal",
-      image: images[2],
-    };
-  }
-};
-
-// Initialisation de la grille
+// Creation de grille pour le jeu
 const creerGrilleJeu = () => {
   afficherEnergie();
+
+  // dimensions de la grille
   const hauteur = 15;
   const largeur = 20;
+  // recuperation de l'interface ou la grille sera 
   const grilleRocher = document.getElementById("grille");
 
-  // Nettoyage complet
+  // On vide la div par mesure de precaution
   grilleRocher.innerHTML = "";
   grilleRocher.style.gridTemplateColumns = `repeat(${largeur}, 1fr)`;
   grilleRocher.style.gridTemplateRows = `repeat(${hauteur}, 1fr)`;
@@ -114,6 +94,32 @@ const grille = Array(hauteur)
 
   return grille;
 };
+
+// Fonction pour positionner les cristaux
+const positionnerCristaux = (grille, largeur, hauteur) => {
+  for (let i = 0; i < 38; i++) {
+    let x, y;
+    const mineurX = Math.floor(largeur / 2);
+    const mineurY = Math.floor(hauteur / 2);
+
+    do {
+      x = Math.floor(Math.random() * largeur);
+      y = Math.floor(Math.random() * hauteur);
+    } while (
+      (Math.abs(x - mineurX) <= 1 && Math.abs(y - mineurY) <= 1) ||
+      grille[y][x]?.type === "cristal"
+    );
+
+    grille[y][x] = {
+      x: x,
+      y: y,
+      type: "cristal",
+      image: images[2],
+    };
+  }
+};
+
+
 
 // Déplacement du mineur
 const deplacerMineur = (direction, grille) => {
