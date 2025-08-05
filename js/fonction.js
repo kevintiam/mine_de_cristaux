@@ -10,7 +10,7 @@ const images = [
 // initialisation du score et de l'energie
 let score = 0;
 let energie = 40;
-
+let maxCristaux = 38;
 
 // Creation de grille pour le jeu
 const creerGrilleJeu = () => {
@@ -44,15 +44,6 @@ const grille = Array(hauteur)
   const centreY = Math.floor(hauteur / 2);
   const centreX = Math.floor(largeur / 2);
 
-  // Vérification qu'aucun mineur n'existe déjà
-  for (let y = 0; y < hauteur; y++) {
-    for (let x = 0; x < largeur; x++) {
-      if (grille[y][x]?.type === "mineur") {
-        grille[y][x] = null;
-      }
-    }
-  }
-
   // Création du nouveau mineur
   grille[centreY][centreX] = {
     x: centreX,
@@ -82,7 +73,6 @@ const grille = Array(hauteur)
         imgSrc = images[0];
         altText = "mineur";
       } else {
-        cell?.type === "pierre";
         imgSrc = images[1];
         altText = "pierre";
       }
@@ -97,7 +87,7 @@ const grille = Array(hauteur)
 
 // Fonction pour positionner les cristaux
 const positionnerCristaux = (grille, largeur, hauteur) => {
-  for (let i = 0; i < 38; i++) {
+  for (let i = 0; i < maxCristaux; i++) {
     let x, y;
     const mineurX = Math.floor(largeur / 2);
     const mineurY = Math.floor(hauteur / 2);
@@ -118,8 +108,6 @@ const positionnerCristaux = (grille, largeur, hauteur) => {
     };
   }
 };
-
-
 
 // Déplacement du mineur
 const deplacerMineur = (direction, grille) => {
@@ -198,7 +186,7 @@ const deplacerMineur = (direction, grille) => {
     updateScore(contientCristal);
 
     // Vérifier si la partie est terminée
-    if (energie === 0 || tousCristauxCollectes(grille)) {
+    if (energie === 0) {
       endGame();
     }
   }
@@ -212,6 +200,9 @@ const updateScore = (contientCristal) => {
     document.getElementById(
       "cristalResultat"
     ).textContent = `Cristaux : ${score}`;
+    if(score === maxCristaux){
+      endGame();
+    }
   }
 };
 
@@ -242,16 +233,6 @@ const endGame = () => {
   endGameElem.style.display = "flex";
 };
 
-export const mettreAJourAffichageMineur = (grille) => {
-  // Par exemple :
-  const cellule = document.querySelector(
-    `[data-x='${grille.mineur.x}'][data-y='${grille.mineur.y}']`
-  );
-  if (cellule) {
-    cellule.classList.add("mineur");
-  }
-};
-
 // Réinitialisation du jeu
 const rejouerPartie = () => {
   // Réinitialisation complète
@@ -269,10 +250,10 @@ const rejouerPartie = () => {
 
   afficherEnergie();
 
-  // Création d'une NOUVELLE grille
+  // Création d'une nouvelle grille
   const nouvelleGrille = creerGrilleJeu();
 
   return nouvelleGrille;
 };
 
-export { creerGrilleJeu, deplacerMineur, updateScore,rejouerPartie };
+export { creerGrilleJeu, deplacerMineur,rejouerPartie };

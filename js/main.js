@@ -3,7 +3,7 @@ import { creerGrilleJeu, deplacerMineur, rejouerPartie } from "./fonction.js";
 let grilleCourante; 
 
 // Initialisation du jeu au démarrage 
-const initJeu = () => { 
+const initialisationJeu = () => { 
   grilleCourante = creerGrilleJeu(); 
 }; 
 
@@ -28,4 +28,4 @@ document.getElementById("rejouer").addEventListener("click", () => {
   grilleCourante = rejouerPartie(); }); 
   
   // Lancement initial 
-  initJeu();
+  initialisationJeu();
