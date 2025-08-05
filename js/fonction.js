@@ -4,6 +4,7 @@ const images = [
   "./img/tile_roche.png",
   "./img/tile_cristal.png",
   "./img/tile_vide.png",
+  "/img/icone_cristal.png",
 
 ];
 
@@ -197,9 +198,8 @@ const updateScore = (contientCristal) => {
   if (contientCristal) {
     score++;
     document.getElementById("nombreCristaux").textContent = score;
-    document.getElementById(
-      "cristalResultat"
-    ).textContent = `Cristaux : ${score}`;
+    document.getElementById("cristalResultat").innerHTML =
+  `Cristaux : ${score} <img src="${images[4]}" alt="cristal" class="img-icon">`;
     if(score === maxCristaux){
       endGame();
     }

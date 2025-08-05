@@ -37,6 +37,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   padding: 1rem;
   gap: 1rem;
 }
@@ -76,7 +77,7 @@ footer {
   }
 }
 
-.ganeOver{
+.gameOver{
     color:red;
     font-weight: bold;
 }
@@ -175,6 +176,10 @@ footer {
   width: 16px;
   height: 20px;
   object-fit: cover;
+}
+.img-icon {
+  width: 30px;
+  height: auto;
 }
 
 @media screen and (min-width: 74rem) {
