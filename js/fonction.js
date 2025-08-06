@@ -4,8 +4,7 @@ const images = [
   "./img/tile_roche.png",
   "./img/tile_cristal.png",
   "./img/tile_vide.png",
-  "/img/icone_cristal.png",
-
+  "./img/icone_cristal.png",
 ];
 
 // initialisation du score et de l'energie
