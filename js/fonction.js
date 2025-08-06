@@ -5,7 +5,7 @@ const images = [
   "./img/tile_cristal.png",
   "./img/tile_vide.png",
   "./img/icone_cristal.png",
-  "./img/pasteque.png",
+  "./img/fruit.png",
 ];
 
 // initialisation du score et de l'energie
@@ -118,7 +118,7 @@ const positionnerCristaux = (grille, largeur, hauteur) => {
 
 // Fonction pour positionner les fruits pour donner de l'energie
 const positionnerFruit = (grille, largeur, hauteur) => {
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 10; i++) {
     let x, y;
     do {
       x = Math.floor(Math.random() * largeur);
