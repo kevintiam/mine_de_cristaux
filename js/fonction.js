@@ -1,4 +1,6 @@
 // Configuration des images
+
+// position [0] pou
 const images = [
   "./img/hero.png",
   "./img/tile_roche.png",
@@ -240,13 +242,9 @@ const updateScore = (contientCristal) => {
 // Mise à jour de l'énergie
 const updateEnergie = (contientFruits) => {
   if (contientFruits) {
-    // Les fruits donnent de l'énergie
     energie = Math.min(energie + 2, 40);
   } else {
-    // Miner coûte de l'énergie
-    if (energie > 0) {
-      energie--;
-    }
+      energie--; 
   }
   afficherEnergie();
 };
